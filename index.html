@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Navelinknet - Gestão de O.S</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
+  <div id="g_id_onload" data-client_id="62391181777-nie4ijlkuu65mhmt4ng57k5k1dhhbdi3.apps.googleusercontent.com"
+    data-callback="handleCredentialResponse">
+  </div>
+
+  <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with"
+    data-shape="rectangular" data-logo_alignment="left">
+  </div>
+
+  <header class="main-header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="logo">Navelink<span>net</span></div>
+        <div id="currentDateTime" class="date-time"></div>
+      </div>
+      <nav class="main-nav">
+        <ul>
+          <a href="#" id="manutencaoNavLink" class="nav-link active">Manutenção</a>
+          <a href="#" id="instalacaoNavLink" class="nav-link">Instalação</a>
+          <li><a href="#" id="addOsBtn" class="nav-button primary"><i class="fas fa-plus"></i> Nova O.S</a></li>
+          <li><a href="#" id="exportBtn" class="nav-button secondary"><i class="fas fa-file-pdf"></i> Exportar
+              Relatório</a></li>
+        </ul>
+      </nav>
+
+      <div class="user-info" id="userInfo" style="display: none;">
+        <span id="userEmail" class="user-email"></span>
+        <button id="logoutBtn" class="logout-button">
+          <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="manutencaoContent" class="tab-content active">
+    <section class="filters">
+      <select id="filterTecnicoManutencao">
+        <option value="">Todos Técnicos</option>
+      </select>
+      <select id="filterStatusManutencao">
+        <option value="">Todos Status</option>
+      </select>
+      <select id="filterCidadeManutencao">
+        <option value="">Todas Cidades</option>
+      </select>
+      <input type="date" id="filterDataManutencao" />
+      <button id="applyFiltersManutencao">Filtrar</button>
+    </section>
+
+    <section id="osActionsPanelManutencao" class="os-actions-panel hidden">
+      <span>O.S. Selecionada: <strong id="selectedOsInfoManutencao">Nenhuma</strong></span>
+      <div>
+        <button id="editSelectedOsBtnManutencao" class="action-btn edit-btn">Editar</button>
+        <button id="deleteSelectedOsBtnManutencao" class="action-btn delete-btn">Excluir</button>
+        <button id="historySelectedOsBtnManutencao" class="action-btn history-btn">Histórico</button>
+      </div>
+    </section>
+
+    <main>
+      <table id="osTableManutencao">
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>ID Cliente</th>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Logradouro</th>
+            <th>Bairro</th>
+            <th>Tipo O.S</th>
+            <th>Técnico</th>
+            <th>Status da O.S</th>
+            <th>Observação</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <div id="instalacaoContent" class="tab-content hidden">
+    <section class="filters">
+      <select id="filterTecnicoInstalacao">
+        <option value="">Todos Técnicos</option>
+      </select>
+      <select id="filterStatusInstalacao">
+        <option value="">Todos Status</option>
+      </select>
+      <select id="filterCidadeInstalacao">
+        <option value="">Todas Cidades</option>
+      </select>
+      <input type="date" id="filterDataInstalacao" />
+      <button id="applyFiltersInstalacao">Filtrar</button>
+    </section>
+
+    <section id="osActionsPanelInstalacao" class="os-actions-panel hidden">
+      <span>O.S. Selecionada: <strong id="selectedOsInfoInstalacao">Nenhuma</strong></span>
+      <div>
+        <button id="editSelectedOsBtnInstalacao" class="action-btn edit-btn">Editar</button>
+        <button id="deleteSelectedOsBtnInstalacao" class="action-btn delete-btn">Excluir</button>
+        <button id="historySelectedOsBtnInstalacao" class="action-btn history-btn">Histórico</button>
+      </div>
+    </section>
+
+    <main>
+      <table id="osTableInstalacao">
+        <thead>
+          <tr>
+            <th>Data/Hora</th>
+            <th>ID Cliente</th>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Logradouro</th>
+            <th>Bairro</th>
+            <th>Tipo O.S</th>
+            <th>Técnico</th>
+            <th>Status da O.S</th>
+            <th>Observação</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <div id="osModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Nova Ordem de Serviço</h2>
+      <form id="osForm">
+        <label>Data:</label>
+        <input type="date" name="data" id="osData" readonly required />
+        <label>Hora:</label>
+        <input type="time" name="hora" id="osHora" readonly required />
+
+        <select name="tecnico" required>
+          <option value="">Selecione Técnico</option>
+        </select>
+        <select name="cidade" required>
+          <option value="">Selecione Cidade</option>
+        </select>
+
+        <input type="text" name="rua" placeholder="Rua" required />
+        <input type="text" name="bairro" placeholder="Bairro" required />
+        <input type="text" name="nome" placeholder="Nome do Cliente" required />
+        <input type="text" name="idCliente" placeholder="ID Cliente" required />
+
+        <select name="tipo" required>
+          <option value="">Tipo O.S</option>
+        </select>
+        <select name="status" required>
+          <option value="">Status</option>
+        </select>
+
+        <textarea name="obs" placeholder="Observação"></textarea>
+        <button type="submit">Salvar</button>
+        <button type="button" id="closeModal">Cancelar</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="historyModal" class="history-modal hidden">
+    <div class="history-modal-content">
+      <h2>Histórico de Edições</h2>
+      <div id="historyEntriesContainer"></div>
+      <button type="button" id="closeHistoryModal" class="history-close-btn">Fechar</button>
+    </div>
+  </div>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+    function decodeJwtResponse(token) {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    }
+
+    function handleCredentialResponse(response) {
+      const userData = decodeJwtResponse(response.credential);
+      document.getElementById('userEmail').textContent = `${userData.name} (${userData.email})`;
+      document.getElementById('userInfo').style.display = 'block';
+      document.querySelector('.g_id_signin').style.display = 'none';
+      localStorage.setItem('userName', userData.name);
+      localStorage.setItem('userEmail', userData.email);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const name = localStorage.getItem('userName');
+      const email = localStorage.getItem('userEmail');
+      if (name && email) {
+        document.getElementById('userEmail').textContent = `${name} (${email})`;
+        document.getElementById('userInfo').style.display = 'block';
+        document.querySelector('.g_id_signin').style.display = 'none';
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      document.getElementById('userInfo').style.display = 'none';
+      document.getElementById('userEmail').textContent = '';
+      document.querySelector('.g_id_signin').style.display = 'block';
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userEmail');
+      google.accounts.id.disableAutoSelect();
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
