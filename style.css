@@ -1,0 +1,1024 @@
+/* Importação de fonte Google Fonts para um visual mais moderno */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* Variáveis de Cores (Ajustadas para tons claros e azul claro) */
+:root {
+  --primary-bg: #f8f9fa; /* Fundo principal da página */
+  --secondary-bg: #ffffff; /* Fundo de elementos como filtros, painéis, modais */
+  --border-color: #e0e0e0; /* Cor da borda clara */
+  --text-dark: #343a40; /* Texto escuro principal */
+  --text-medium: #6c757d; /* Texto cinza para detalhes */
+  --text-light: #adb5bd; /* Texto muito claro ou placeholders */
+
+  --navelink-blue: #007bff; /* Azul claro para o logo e acentos primários */
+  --primary-button-bg: #007bff; /* Cor de fundo para botões primários */
+  --primary-button-text: #ffffff;
+  --secondary-button-bg: #e9ecef; /* Cor de fundo para botões secundários */
+  --secondary-button-text: #343a40;
+
+  --hover-blue: #0056b3; /* Azul mais escuro para hover */
+  --hover-light-bg: #f1f3f5; /* Fundo claro para hover em elementos secundários */
+
+  --table-header-bg: #f1f3f5; /* Fundo do cabeçalho da tabela */
+  --table-row-stripe: #f8f9fa; /* Cor da linha alternada da tabela */
+
+  /* Cores de ação foram mantidas para os botões "Editar", "Excluir", "Histórico"
+   * mas agora eles usarão o estilo base de 'action-btn' e suas cores serão mais dinâmicas. */
+  --action-edit: #ffc107; /* Laranja para editar (mantido como cor de acento) */
+  --action-delete: #dc3545; /* Vermelho para excluir (mantido como cor de acento) */
+  --action-history: #6f42c1; /* Roxo para histórico (mantido como cor de acento) */
+}
+
+/* NOVO: Reset básico para boxes */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  background: var(--primary-bg); /* Usando variável */
+  color: var(--text-dark); /* Usando variável */
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column; /* Organiza os elementos verticalmente */
+  min-height: 100vh;
+}
+
+/* --- Header --- */
+.main-header {
+  background-color: var(--secondary-bg); /* Usando variável para fundo claro */
+  color: var(--text-dark); /* Cor do texto no header */
+  padding: 20px 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra mais suave */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70px;
+
+  border-radius: 12px; /* Arredonda as bordas do cabeçalho */
+  margin: 25px auto 0; /* Centraliza o cabeçalho e define margem superior/inferior */
+  width: 100%; /* Ocupa a largura total disponível */
+  max-width: 1300px; /* Garante que não ultrapasse a largura do layout principal */
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  /* Removido max-width aqui, já está no .main-header para consistência */
+  flex-wrap: wrap; /* Permite que os itens quebrem linha se necessário */
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaçamento entre logo e data/hora */
+}
+
+.logo {
+  font-size: 2.2em; /* Um pouco maior */
+  font-weight: 700;
+  color: var(--navelink-blue); /* Logo azul claro */
+  text-decoration: none;
+  letter-spacing: 0px; /* Ajuste para melhor legibilidade */
+  transition: color 0.3s ease;
+}
+
+.logo:hover {
+  color: var(--hover-blue); /* Hover mais escuro do azul claro */
+}
+
+.date-time {
+  font-size: 0.9em;
+  color: var(--text-medium); /* Cor para o texto da data/hora */
+  opacity: 1; /* Garantir que está visível */
+  display: block; /* Garante que o relógio apareça */
+}
+
+/* --- Navegação Principal --- */
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 15px; /* AJUSTADO: Espaçamento menor para evitar sobreposição */
+  align-items: center;
+  flex-wrap: wrap; /* Permite que as abas e botões quebrem linha se necessário */
+}
+
+.main-nav li {
+  position: relative;
+}
+
+/* Estilos para os links/abas (Manutenção, Instalação) */
+.main-nav .nav-link {
+  text-decoration: none;
+  color: var(--text-medium); /* Cor padrão dos links */
+  font-size: 1em;
+  font-weight: 500;
+  padding: 10px 15px; /* Aumentei o padding para dar espaço ao fundo e bordas */
+  border-radius: 8px; /* Arredondamento dos cantos */
+  transition: color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 1; /* Para que o background fique sob a linha ::after */
+  background-color: transparent; /* Fundo transparente por padrão */
+  flex-shrink: 0; /* IMPEDE ENCOLHIMENTO DESNECESSÁRIO */
+}
+
+.main-nav .nav-link::after {
+  /* Linha de indicação de ativo/hover */
+  content: "";
+  position: absolute;
+  left: 50%; /* Centraliza a linha */
+  transform: translateX(-50%); /* Ajusta a centralização */
+  bottom: 0; /* Posição da linha na parte inferior do "botão" da aba */
+  width: 0; /* Largura inicial zero */
+  height: 3px;
+  background-color: var(--navelink-blue);
+  border-radius: 2px;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.main-nav .nav-link:hover {
+  color: var(--text-dark); /* Texto mais escuro no hover */
+  background-color: var(--hover-light-bg); /* Fundo sutil no hover */
+}
+
+.main-nav .nav-link:hover::after {
+  width: calc(100% - 20px); /* Linha quase completa no hover */
+  background-color: var(--hover-blue);
+}
+
+.main-nav .nav-link.active {
+  color: var(--text-dark); /* Texto escuro para o ativo */
+  font-weight: 600;
+  background-color: var(--secondary-button-bg); /* Fundo para a aba ativa */
+}
+
+.main-nav .nav-link.active::after {
+  width: calc(100% - 20px); /* Linha azul completa para o ativo */
+  background-color: var(--navelink-blue);
+}
+
+/* Estilo para botões de ação na navegação (Nova O.S, Exportar) */
+.main-nav .nav-button {
+  padding: 12px 25px; /* Padding maior */
+  border: 1px solid var(--border-color); /* Borda sutil */
+  background-color: var(--secondary-bg); /* Fundo claro */
+  color: var(--text-dark); /* Cor do texto */
+  border-radius: 8px; /* Já tem arredondamento */
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    transform 0.2s ease, box-shadow 0.3s ease;
+  text-decoration: none; /* Adicionado: Remove o sublinhado dos botões */
+  flex-shrink: 0; /* IMPEDE ENCOLHIMENTO DESNECESSÁRIO */
+}
+
+.main-nav .nav-button.primary {
+  /* Para o botão "Nova O.S" */
+  background-color: var(--primary-button-bg);
+  color: var(--primary-button-text);
+  border-color: var(--primary-button-bg);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+}
+
+.main-nav .nav-button.primary:hover {
+  background-color: var(--hover-blue);
+  border-color: var(--hover-blue);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.3);
+}
+
+.main-nav .nav-button.secondary {
+  /* Para o botão "Exportar Relatório" */
+  background-color: var(--secondary-button-bg);
+  color: var(--secondary-button-text);
+  border-color: var(--border-color);
+}
+
+.main-nav .nav-button.secondary:hover {
+  background-color: var(--hover-light-bg);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Ícones dentro dos botões/links */
+.main-nav .nav-link i,
+.main-nav .nav-button i {
+  margin-right: 8px; /* Ajuste o espaçamento do ícone */
+}
+
+/* Estilo para o botão "Sair" - AGORA USANDO A CLASSE ".logout-button" */
+.logout-button {
+  background-color: var(--secondary-button-bg); /* Fundo cinza claro */
+  color: var(--secondary-button-text); /* Texto cinza escuro */
+  border: 1px solid var(--border-color); /* Borda sutil */
+
+  padding: 10px 18px; /* Padding para visual similar à imagem original */
+  border-radius: 8px; /* Arredondamento para visual similar à imagem original */
+  cursor: pointer;
+  font-size: 0.9rem; /* Tamanho da fonte para visual similar */
+  font-weight: 500; /* Peso da fonte para visual similar */
+
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    transform 0.2s ease, box-shadow 0.3s ease; /* Transições suaves */
+
+  /* Mantém ícone e texto lado a lado, impede quebra de linha */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+
+  margin-left: 10px; /* Mantém a margem à esquerda se necessário */
+}
+
+.logout-button:hover {
+  background-color: var(--hover-light-bg); /* Fundo mais claro no hover */
+  border-color: var(--text-medium); /* Borda um pouco mais escura no hover */
+  color: var(--text-dark); /* Texto mais escuro no hover */
+  transform: translateY(-1px); /* Pequeno movimento para cima */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave no hover */
+}
+
+/* O user-info também deve manter seu conteúdo junto */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  white-space: nowrap; /* Garante que o nome do usuário e o botão fiquem na mesma linha */
+}
+
+/* --- FIM Header --- */
+
+/* Conteúdo Principal (Centralizado) */
+main {
+  flex-grow: 1; /* Ocupa o espaço restante */
+  padding: 0 40px; /* Removido padding top/bottom para gerenciar com as margens dos painéis */
+  max-width: 1300px; /* AJUSTADO: Define a largura máxima do conteúdo principal */
+  margin: 0 auto; /* Centraliza o conteúdo principal */
+  width: 100%; /* Garante que ocupe a largura máxima permitida */
+  box-sizing: border-box; /* Inclui padding na largura total */
+  display: flex; /* Adicionado para flexbox */
+  flex-direction: column; /* Organiza itens em coluna */
+  align-items: center; /* Centraliza itens horizontalmente dentro de main, incluindo a tabela */
+}
+
+/* --- Abas de Conteúdo (Solução para o problema) --- */
+.tab-content {
+  display: none; /* Por padrão, todos os conteúdos de abas estão ocultos */
+  width: 100%; /* Garante que a aba ocupe a largura completa dentro do main */
+}
+
+.tab-content.active {
+  /* Esta regra é a mais forte e garante que a aba ativa seja exibida */
+  display: block !important; /* CRUCIAL: Exibe apenas a aba com a classe 'active' */
+}
+/* FIM Abas de Conteúdo */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Espaçamento entre os itens */
+  padding: 25px;
+  background: var(--secondary-bg);
+
+  border-radius: 12px; /* Arredonda as bordas do painel de filtros */
+  margin: 25px auto; /* Afasta o painel de filtros das bordas (top/bottom e left/right) e centraliza */
+  width: 100%; /* Ocupa a largura total disponível */
+  max-width: 1300px; /* Alinha com o container principal */
+
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  align-items: center;
+  justify-content: flex-start; /* Alinha os itens ao início para que não se espalhem tanto */
+}
+
+.filters select,
+.filters input[type="date"],
+.filters input[type="text"] {
+  width: auto; /* Deixa a largura ser determinada pelo conteúdo e padding */
+  min-width: 160px; /* Largura mínima razoável */
+  /* max-width: 200px; */ /* Opcional: descomente e ajuste se quiser um limite máximo de largura */
+
+  padding: 8px 12px; /* Mantém o tamanho vertical compacto */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--primary-bg);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+
+  /* Ajustes para a seta do select */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236C757D%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13.2-6.4H18.8c-5%200-9.3%201.8-13.2%206.4-3.9%204.6-6.4%2010.3-6.4%2016.3s2.5%2011.7%206.4%2016.3l129.6%20129.6c3.9%203.9%208.7%206.4%2013.2%206.4s9.3-2.5%2013.2-6.4L287%20102c3.9-4.6%206.4-10.3%206.4-16.3S290.9%2074%20287%2069.4z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+  padding-right: 30px;
+}
+.filters input[type="text"] {
+  background-image: none;
+  padding-right: 12px;
+}
+
+.filters select:focus,
+.filters input[type="date"]:focus,
+.filters input[type="text"]:focus {
+  border-color: var(--navelink-blue);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+  outline: none;
+}
+
+/* Botão Filtrar usando a cor primária (azul) */
+#applyFiltersManutencao,
+#applyFiltersInstalacao {
+  padding: 8px 15px; /* Mantém o botão compacto */
+  background: var(
+    --navelink-blue
+  ); /* Agora é azul, consistente com Nova O.S. */
+  color: var(--primary-button-text);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  width: auto; /* Garante que o botão use apenas a largura necessária */
+  flex-shrink: 0; /* Impede que o botão encolha em excesso */
+}
+
+#applyFiltersManutencao:hover,
+#applyFiltersInstalacao:hover {
+  background: var(--hover-blue);
+  transform: translateY(-2px);
+}
+
+.os-actions-panel {
+  background: var(--secondary-bg);
+  padding: 20px 25px; /* Ajuste de padding */
+
+  margin: 25px auto; /* Afasta o painel das bordas (top/bottom e left/right) e centraliza */
+  border-radius: 12px; /* Más arredondado */
+  width: 100%; /* Ocupa a largura total disponível */
+  max-width: 1300px; /* Alinha com o container principal */
+
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Sombra suave */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  border: 1px solid var(--border-color);
+}
+
+.os-actions-panel span {
+  font-size: 1rem;
+  color: var(--text-dark);
+  font-weight: 500;
+}
+
+.os-actions-panel strong {
+  color: var(--navelink-blue); /* Azul para destaque no texto */
+  font-weight: 600;
+}
+
+/* Estilos para os botões "Editar", "Excluir", "Histórico" */
+.os-actions-panel .action-btn {
+  padding: 10px 18px;
+  border-radius: 8px; /* Más arredondado */
+  font-size: 0.9rem; /* Um pouco menor */
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  border: 1px solid; /* Borda que será colorida */
+  background-color: transparent; /* Fundo transparente por padrão */
+}
+
+/* Cores específicas para cada botão e hover */
+#editSelectedOsBtnManutencao,
+#editSelectedOsBtnInstalacao {
+  color: var(--action-edit); /* Laranja para o texto */
+  border-color: var(--action-edit); /* Laranja para a borda */
+}
+#editSelectedOsBtnManutencao:hover,
+#editSelectedOsBtnInstalacao:hover {
+  background-color: var(--action-edit); /* Laranja no hover */
+  color: var(--primary-button-text); /* Texto branco no hover */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(255, 193, 7, 0.2);
+}
+
+#deleteSelectedOsBtnManutencao,
+#deleteSelectedOsBtnInstalacao {
+  color: var(--action-delete); /* Vermelho para o texto */
+  border-color: var(--action-delete); /* Vermelho para a borda */
+}
+#deleteSelectedOsBtnManutencao:hover,
+#deleteSelectedOsBtnInstalacao:hover {
+  background-color: var(--action-delete); /* Vermelho no hover */
+  color: var(--primary-button-text); /* Texto branco no hover */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(220, 53, 69, 0.2);
+}
+
+#historySelectedOsBtnManutencao,
+#historySelectedOsBtnInstalacao {
+  color: var(--action-history); /* Roxo para o texto */
+  border-color: var(--action-history); /* Roxo para a borda */
+}
+#historySelectedOsBtnManutencao:hover,
+#historySelectedOsBtnInstalacao:hover {
+  background-color: var(--action-history); /* Roxo no hover */
+  color: var(--primary-button-text); /* Texto branco no hover */
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(111, 66, 193, 0.2);
+}
+
+.table-container {
+  width: 100%;
+  max-width: 1300px; /* Alinha com o container principal */
+  margin: 25px auto; /* Centraliza a tabela */
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate; /* Permite border-spacing */
+  border-spacing: 0;
+  background: var(--secondary-bg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra mais destacada */
+  border-radius: 12px; /* Más arredondado */
+  overflow: hidden; /* Garante que o border-radius funcione */
+  border: 1px solid var(--border-color); /* Borda geral da tabela */
+  table-layout: fixed; /* MANTIDO: para controlar larguras de coluna com precisão */
+}
+
+th,
+td {
+  border: none; /* Remover bordas individuais, usar a borda inferior */
+  padding: 15px 25px; /* Más padding */
+  text-align: left;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-color); /* Borda inferior das células */
+}
+
+th {
+  background: var(--table-header-bg); /* Fundo do cabeçalho */
+  font-weight: 600;
+  color: var(--text-medium); /* Cor do texto do cabeçalho */
+  text-transform: uppercase; /* Maiúsculas */
+  letter-spacing: 0.5px;
+}
+
+/* LARGURAS DAS COLUNAS DA TABELA (AJUSTADAS PARA FICAREM COMO NA SEGUNDA FOTO) */
+table th:nth-child(1),
+table td:nth-child(1) {
+  width: 10%;
+} /* Data/Hora */
+table th:nth-child(2),
+table td:nth-child(2) {
+  width: 9%;
+} /* ID Cliente */
+table th:nth-child(3),
+table td:nth-child(3) {
+  width: 10%;
+} /* Nome */
+table th:nth-child(4),
+table td:nth-child(4) {
+  width: 9%;
+} /* Cidade */
+table th:nth-child(5),
+table td:nth-child(5) {
+  width: 12%;
+} /* Logradouro */
+table th:nth-child(6),
+table td:nth-child(6) {
+  width: 9%;
+} /* Bairro */
+table th:nth-child(7),
+table td:nth-child(7) {
+  width: 9%;
+} /* Tipo O.S */
+table th:nth-child(8),
+table td:nth-child(8) {
+  width: 9%;
+} /* Técnico */
+table th:nth-child(9),
+table td:nth-child(9) {
+  width: 9%;
+} /* Status da O.S */
+table th:nth-child(10),
+table td:nth-child(10) {
+  width: 14%;
+} /* Observação */
+
+/* Bordas arredondadas nos cantos da tabela */
+table thead tr th:first-child {
+  border-top-left-radius: 12px;
+}
+
+table thead tr th:last-child {
+  border-top-right-radius: 12px;
+}
+
+/* Striping de linhas */
+tr:nth-child(even) {
+  background: var(--table-row-stripe);
+}
+tr:nth-child(odd) {
+  background: var(--secondary-bg);
+}
+
+.selectable-row {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.selectable-row:hover {
+  background: var(--hover-light-bg); /* Fundo claro no hover */
+}
+
+.selectable-row.selected {
+  background: #cce0ff; /* Um azul bem claro para linha selecionada */
+  font-weight: 500;
+  color: var(--text-dark);
+  box-shadow: inset 4px 0 0 var(--navelink-blue); /* Linha azul de destaque lateral */
+}
+
+/* Arredondamento inferior da tabela */
+table tbody tr:last-child td {
+  border-bottom: none; /* Remover borda da última linha */
+}
+table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* --- Ajuste para texto longo (agora mais abrangente para todas as colunas que podem ter texto longo) --- */
+/* Estas regras complementam as larguras fixas, garantindo que o texto não quebre e mostre "..." */
+table th,
+table td {
+  white-space: nowrap; /* Impede a quebra de linha por padrão em todas as células */
+  overflow: hidden; /* Oculta o texto que excede o limite */
+  text-overflow: ellipsis; /* Adiciona "..." ao texto cortado */
+}
+/* Você pode ajustar o min-width se uma coluna específica precisar de um mínimo maior,
+ * mas com larguras fixas e flex-wrap nas media queries, isso será menos crítico. */
+
+/* --- Modais --- */
+.modal,
+.history-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fundo mais suave */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none !important; /* CRUCIAL: Oculta qualquer elemento com esta classe */
+}
+
+.modal-content,
+.history-modal-content {
+  background: var(--secondary-bg);
+  padding: 35px; /* Más padding */
+  border-radius: 15px; /* Más arredondado */
+  width: 500px; /* Largura fixa para modal */
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra mais forte */
+  animation: fadeIn 0.3s ease-out;
+  border: 1px solid var(--border-color);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-content h2,
+.history-modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 25px; /* Más espaçamento */
+  font-size: 1.8rem; /* Tamanho maior */
+  color: var(--text-dark);
+  text-align: center;
+  border-bottom: 1px solid var(--border-color); /* Borda sutil */
+  padding-bottom: 15px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px; /* Más espaçamento */
+  border: 1px solid var(--border-color);
+  border-radius: 8px; /* Más arredondado */
+  font-size: 1rem;
+  background: var(--primary-bg); /* Fundo claro para inputs */
+  color: var(--text-dark);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  border-color: var(--navelink-blue);
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
+  outline: none;
+  background: var(--secondary-bg); /* Fundo branco ao focar */
+}
+
+.modal-content button {
+  padding: 12px 25px; /* Padding maior */
+  margin-right: 12px; /* Espaçamento entre botões */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.modal-content button[type="submit"] {
+  background: var(--navelink-blue); /* Azul para salvar */
+  color: var(--primary-button-text);
+}
+
+.modal-content button[type="submit"]:hover {
+  background: var(--hover-blue);
+  transform: translateY(-2px);
+}
+
+.modal-content button[type="button"]#closeModal {
+  background: var(--secondary-button-bg); /* Cinza claro para cancelar */
+  color: var(--secondary-button-text);
+  border: 1px solid var(--border-color);
+}
+
+.modal-content button[type="button"]#closeModal:hover {
+  background: var(--hover-light-bg);
+  transform: translateY(-2px);
+}
+
+/* Ações de Linha (Editar/Salvar/Cancelar) */
+/* Removido estilos específicos para .editBtn, .saveBtn, .cancelBtn, .deleteBtn, .historyBtn
+ * para que eles herdem de .action-btn ou sejam controlados pelos IDs específicos */
+.os-editable {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  font-size: 0.9rem;
+  padding: 4px 6px;
+  box-sizing: border-box;
+  background-color: var(--primary-bg); /* Fundo claro para campos editáveis */
+  color: var(--text-dark);
+}
+
+/* --- Histórico Modal --- */
+.history-modal-content {
+  display: flex; /* Garante layout flex */
+  flex-direction: column;
+}
+
+.history-modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 15px;
+}
+
+#historyEntriesContainer {
+  /* Container para as entradas de histórico */
+  flex-grow: 1; /* Permite que o container de entradas cresça */
+  max-height: 350px; /* Altura máxima para rolagem */
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 25px;
+  background-color: var(--primary-bg);
+}
+
+.history-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--secondary-bg);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.history-entry:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.history-avatar {
+  width: 48px; /* Tamanho do avatar */
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--navelink-blue); /* Azul do logo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem; /* Tamanho do ícone/letra */
+  color: white;
+  font-weight: 600;
+  flex-shrink: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.history-details {
+  flex-grow: 1;
+}
+
+.history-details p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--text-dark);
+}
+
+.history-user-info {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.history-timestamp {
+  font-size: 0.85rem;
+  color: var(--text-medium);
+  margin-left: 15px;
+}
+
+.history-action {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.history-close-btn {
+  align-self: center; /* Centraliza o botão */
+  background: var(--primary-button-bg);
+  color: var(--primary-button-text);
+  border: none;
+  padding: 14px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  margin-top: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.history-close-btn:hover {
+  background: var(--hover-blue);
+  transform: translateY(-2px);
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 1024px) {
+  /* AJUSTADO: Margens e max-width para elementos principais em telas menores */
+  .main-header,
+  .filters,
+  .os-actions-panel,
+  .table-container {
+    /* Adicionado table-container para manter a consistência */
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: calc(
+      100% - 40px
+    ); /* Ajusta a largura máxima com as novas margens */
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .main-nav ul {
+    gap: 10px; /* AJUSTADO: Gap ainda menor para telas menores */
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch; /* Garante que os itens se estiquem para 100% */
+    gap: 15px;
+    justify-content: center; /* Centraliza o painel em telas menores */
+  }
+
+  .filters select,
+  .filters input[type="date"],
+  .filters input[type="text"] {
+    width: 100%;
+    max-width: unset; /* Remove o limite de largura máxima */
+    min-width: unset; /* Remove o limite de largura mínima */
+    padding: 10px 15px;
+    font-size: 0.95rem;
+  }
+  .filters input[type="text"] {
+    padding-right: 15px;
+  }
+
+  #applyFiltersManutencao,
+  #applyFiltersInstalacao {
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+
+  .os-actions-panel {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .os-actions-panel div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  /* AJUSTADO: Margens e max-width para elementos principais em telas muito pequenas */
+  .main-header,
+  .filters,
+  .os-actions-panel,
+  .table-container {
+    /* Adicionado table-container para manter a consistência */
+    margin: 15px 20px; /* Ajusta margens para telas muito pequenas */
+    max-width: calc(100% - 40px);
+  }
+
+  .main-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 15px 20px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .header-left {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 1.8em;
+  }
+
+  .date-time {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .main-nav ul {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .main-nav .nav-link,
+  .main-nav .nav-button {
+    width: 100%;
+    padding: 12px;
+    justify-content: center;
+    border-radius: 8px; /* Adicionado para mobile */
+  }
+  .main-nav .nav-link::after {
+    /* Oculta a linha de hover/ativo em mobile para simplificar */
+    display: none;
+  }
+
+  main {
+    padding: 15px 20px;
+  }
+
+  /* Tabela Responsiva (Cards para cada linha) */
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  table tr {
+    border: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  table td {
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    padding-left: 50%; /* Espaço para o label */
+    text-align: right;
+  }
+
+  table td:last-child {
+    border-bottom: 0;
+  }
+
+  table td:before {
+    position: absolute;
+    left: 15px;
+    width: 40%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-medium);
+    content: attr(data-label); /* Usa o atributo data-label do HTML */
+  }
+
+  .modal-content,
+  .history-modal-content {
+    width: 95%;
+    padding: 25px;
+  }
+}
+
+/* Estilos para ícones do Font Awesome (apenas garantir consistência visual) */
+.fas,
+.far,
+.fab {
+  margin-right: 5px;
+}
+
+/* Permite que células mostrem o texto completo, sem cortar */
+table {
+  table-layout: auto; /* permite colunas com largura variável */
+  width: 100%; /* mantém largura total */
+  border-collapse: collapse;
+}
+
+th,
+td {
+  white-space: nowrap; /* evita quebra de linha */
+  overflow: visible; /* mostra tudo */
+  text-overflow: unset; /* desativa os "..." */
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+}
